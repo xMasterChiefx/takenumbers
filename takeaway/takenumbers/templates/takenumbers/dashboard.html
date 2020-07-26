@@ -1,0 +1,29 @@
+{% extends 'takenumbers/base.html' %}
+
+{% block content %}
+
+<div class="jumbotron"><h1>Dashboard</h1></div>
+<div class="container">
+<div class="card">
+  <div class="card-header">
+     <h3><button class="btn btn-primary">{{nums_count}}</button> Bestellungen</h3>
+  </div>
+  <div class="card-body">
+    <a href="{% url 'alldelete' %}" class="btn btn-danger">Tagesabschluss</a>
+  </div>
+</div>
+<div>&nbsp;</div>
+<div class="card">
+    <div class="card-header">
+    <h3><button class="btn btn-warning">{{nums_working}}</button> working... </h3>
+    </div>
+    <div class="card-body">
+        <p class="card-text"><button class="btn btn-outline-info">45,2</button> Bestellungen pro Stunde  </p>
+        <p class="card-text"><button class="btn btn-outline-info">3:21</button> dauert eine Bestellung </p>
+    </div>
+</div>
+
+</div>
+</div> 
+
+{% endblock content %}

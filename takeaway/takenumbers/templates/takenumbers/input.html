@@ -1,0 +1,15 @@
+{% extends 'takenumbers/base.html' %}
+
+{% block content %}
+<div class="jumbotron"><h1>Nächste Bestellung erstellen</h1></div>
+
+<div class="container">
+    <h2>{{error}}</h2>
+        <h3>Die nächste Bestellnummer ist:</h3>
+        <form method="POST">
+            {%csrf_token%} 
+            {{form.as_p}}
+            <button class="btn btn-primary btn-success" type="submit" onclick="location.href='takenumbers/next.html';">Erstellen</button>
+        </form>
+</div>
+{% endblock content %}
