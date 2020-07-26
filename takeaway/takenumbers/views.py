@@ -23,7 +23,7 @@ def nextnumber(request):
             form = BestellnummerForm(request.POST)
             newbnumber = form.save(commit=False)
             newbnumber.save()
-            return redirect('nextnumber')
+            return redirect('takenumbers:nextnumber')
         except ValueError:
             return render(request, 'takenumbers/input.html', {'form':BestellnummerForm(),'error':'Bad Data passed in'})
 
@@ -72,7 +72,7 @@ def bnready(request,num_pk):
     if request.method == 'POST':
         num.completed = timezone.now()
         num.save()
-        return redirect('workingnumber')
+        return redirect('takenumbers:workingnumber')
 
 
 def bndelete(request):
@@ -86,7 +86,7 @@ def alldelete(request):
         try:
             nums = Bestellnummer.objects.all()
             nums.delete()
-            return redirect('dashboard')
+            return redirect('takenumbers:dashboard')
         except ValueError:
             return render(request, 'takenumbers/dashboard.html', {'error':'Bad Data passed in'})
 
@@ -100,7 +100,7 @@ def takeout(request):
             #form = BestellnummerForm(request.POST)
             deletenumber = form.delete(commit=False)
             deletenumber.delete()
-            return redirect('workingnumber')
+            return redirect('takenumbers:workingnumber')
         except ValueError:
             return render(request, 'takenumbers/takeout.html', {'nums':BestellnummerForm(),'error':'Bad Data passed in'})
 
@@ -110,5 +110,5 @@ def takedelete(request,num_pk):
     if request.method == 'POST':
         num.archieved = True
         num.save()
-        return redirect('takeout')
+        return redirect('takenumbers:takeout')
 

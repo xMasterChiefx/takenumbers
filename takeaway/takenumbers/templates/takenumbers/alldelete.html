@@ -9,7 +9,7 @@
      <h3>Es werden alle Bestellungen gelöscht</h3>
   </div>
   <div class="card-body">
-    <form method="POST" action="{% url 'alldelete' %}">
+    <form method="POST" action="{% url 'takenumbers:alldelete' %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Löschen</button>
     </form>

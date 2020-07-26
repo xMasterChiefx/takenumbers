@@ -11,7 +11,7 @@
             <h1><strong>{{num.bnum}}</strong></h1>
         </div>
         <div class="col-2">
-            <form method="POST" action="{% url 'takedelete' num.id %}">
+            <form method="POST" action="{% url 'takenumbers:takedelete' num.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success">Ausgabe</button>
             </form>
