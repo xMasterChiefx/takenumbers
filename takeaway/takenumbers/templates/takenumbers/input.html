@@ -4,17 +4,17 @@
 <script>
     function increaseValue()
 {
-    var value = parseInt(document.getElementById('number').value, 10);
+    var value = parseInt(document.getElementById('ex2').value, 10);
     value = isNaN(value) ? 0 : value;
     value = value + 1;
-    document.getElementById('number').value = value;
+    document.getElementById('ex2').value = value;
 }
 function reduceValue()
 {
-    var value = parseInt(document.getElementById('number').value, 10);
+    var value = parseInt(document.getElementById('ex2').value, 10);
     value = isNaN(value) ? 0 : value;
     value = value - 1;
-    document.getElementById('number').value = value;
+    document.getElementById('ex2').value = value;
 }
 </script>
 <div class="jumbotron"><h1>Nächste Bestellung erstellen</h1></div>
@@ -31,10 +31,12 @@ function reduceValue()
             <h5 class="card-header">Bestellnummer eingeben</h5>
             <div class="card-body">
                     {%csrf_token%} 
-                    <input type="button" class="btn btn-primary btn-danger" onclick="reduceValue()" value="-" />
-                    <input class="form-control" size="1" type="number" name="bnum" autocomplete="off" value="{{lastbnum.bnum|add:1}}">
+                    <div class="form-group row"><input type="button" class="btn btn-primary btn-danger" onclick="reduceValue()" value="-" />
+                    <div class="col-xs-3">
+                    <input class="form-control" id="ex2" type="number" name="bnum" autocomplete="off" value="{{lastbnum.bnum|add:1}}">
+                    </div>
                     <input type="button" class="btn btn-primary btn-success" onclick="increaseValue()" value="+" />           
-            </div>
+            </div></div>
             <div class="card-footer"><button class="btn btn-primary" type="submit" onclick="location.href='takenumbers/next.html';">Erstellen</button></div>
         </div>
         </form>        
