@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Bestellnummer
 from .forms import BestellnummerForm
-from django.db.models import Count, F
+from django.db.models import Count, Max, F
 from django.utils import timezone
 
 
@@ -14,10 +14,15 @@ def index(request):
 
 
 def nextnumber(request):
+    #lastbnum = get_object_or_404(Bestellnummer)
     if request.method == 'GET':
-        lastbnum = Bestellnummer.objects.all().count()
-        lastbnum = lastbnum +1
-        return render(request, 'takenumbers/input.html', {'form':BestellnummerForm(initial={'bnum': lastbnum})})
+        try:
+            lastbnum = Bestellnummer.objects.latest('id')
+            #newbnum = lastbnum + 1
+            #lastbnum = lastbnum +1
+            return render(request, 'takenumbers/input.html', {'form':BestellnummerForm,'lastbnum':lastbnum})
+        except:
+            return render(request, 'takenumbers/input.html', {'form':BestellnummerForm})
     else:
         try:
             form = BestellnummerForm(request.POST)
@@ -25,7 +30,7 @@ def nextnumber(request):
             newbnumber.save()
             return redirect('takenumbers:nextnumber')
         except ValueError:
-            return render(request, 'takenumbers/input.html', {'form':BestellnummerForm(),'error':'Bad Data passed in'})
+            return render(request, 'takenumbers/input.html', {'form':BestellnummerForm(),'error':'Die Bestellnummer existiert bereits!'})
 
 
 def workingnumber(request):

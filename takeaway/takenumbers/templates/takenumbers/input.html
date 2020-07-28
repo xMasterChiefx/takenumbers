@@ -1,15 +1,42 @@
 {% extends 'takenumbers/base.html' %}
 
 {% block content %}
+<script>
+    function increaseValue()
+{
+    var value = parseInt(document.getElementById('number').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value = value + 1;
+    document.getElementById('number').value = value;
+}
+function reduceValue()
+{
+    var value = parseInt(document.getElementById('number').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value = value - 1;
+    document.getElementById('number').value = value;
+}
+</script>
 <div class="jumbotron"><h1>Nächste Bestellung erstellen</h1></div>
 
 <div class="container">
-    <h2>{{error}}</h2>
-        <h3>Die nächste Bestellnummer ist:</h3>
+    {% if error  %}
+        <div class="alert alert-danger" role="danger"><strong>{{error}}</strong></div>
+    {% endif %}
+    {% if lastbnum %}
+        <div class="alert alert-dark" role="alert">Letzte Bestellnummer: <strong>{{lastbnum.bnum}}</strong></div>
+    {% endif %}
         <form method="POST">
-            {%csrf_token%} 
-            {{form.as_p}}
-            <button class="btn btn-primary btn-success" type="submit" onclick="location.href='takenumbers/next.html';">Erstellen</button>
-        </form>
+        <div class="card">
+            <h5 class="card-header">Bestellnummer eingeben</h5>
+            <div class="card-body">
+                    {%csrf_token%} 
+                    <input type="button" class="btn btn-primary btn-danger" onclick="reduceValue()" value="-" />
+                    <input class="form-control" size="1" type="number" name="bnum" autocomplete="off" value="{{lastbnum.bnum|add:1}}">
+                    <input type="button" class="btn btn-primary btn-success" onclick="increaseValue()" value="+" />           
+            </div>
+            <div class="card-footer"><button class="btn btn-primary" type="submit" onclick="location.href='takenumbers/next.html';">Erstellen</button></div>
+        </div>
+        </form>        
 </div>
 {% endblock content %}
