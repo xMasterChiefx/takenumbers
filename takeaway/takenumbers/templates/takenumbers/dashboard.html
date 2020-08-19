@@ -6,20 +6,30 @@
 <div class="container">
 <div class="card">
     <div class="card-header">
-    <h3 style="font-size:6vw;"><button class="btn btn-warning">{{nums_working}}</button> working... </h3>
+    <h3 style="font-size:6vw;">Bestellungen </h3>
     </div>
     <div class="card-body">
-        <p class="card-text"><button class="btn btn-outline-info">45,2</button> Bestellungen pro Stunde  </p>
-        <p class="card-text"><button class="btn btn-outline-info">3:21</button> dauert eine Bestellung </p>
+        <p class="card-text"><button class="btn btn-outline-info">{{nums_working}}</button> Aktive Bestellungen  </p>
+        {% comment %} <p class="card-text"><button class="btn btn-outline-info"> {% endcomment %}
+        <p>{{nums_ttc.time_elapsed__avg|truncatechars:"8"}}</button> dauert eine Bestellung </p>
     </div>
 </div>
 <div>&nbsp;</div>
 <div class="card">
   <div class="card-header">
-     <h3 style="font-size:6vw;"><button class="btn btn-primary">{{nums_count}}</button> Bestellungen</h3>
+     <h3 style="font-size:6vw;">Übersicht</h3>
   </div>
   <div class="card-body">
-    <a href="{% url 'takenumbers:alldelete' %}" class="btn btn-danger">Tagesabschluss</a>
+        <p class="card-text"><button class="btn btn-outline-success">{{nums_count}}</button> Bestellungen aufgenommen  </p>
+  </div>
+</div>
+<div>&nbsp;</div>
+<div class="card">
+  <div class="card-header">
+     <h3 style="font-size:6vw;">Management</h3>
+  </div>
+  <div class="card-body">
+        <p class="card-text"><a href="{% url 'takenumbers:alldelete' %}" class="btn btn-danger">Tagesabschluss</a>  </p>
   </div>
 </div>
 <div>&nbsp;</div>

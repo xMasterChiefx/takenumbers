@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Bestellnummer
 from .forms import BestellnummerForm
-from django.db.models import Count, Max, F
+from django.db.models import Count, Max, Avg, Func, F, Sum, DurationField
 from django.utils import timezone
+from django.db.models.functions import Cast
 
 
 # Create your views here.
@@ -65,7 +66,8 @@ def dashboard(request):
         nums = Bestellnummer.objects.all()
         nums_count = Bestellnummer.objects.count()
         nums_working = Bestellnummer.objects.filter(completed__isnull=True).count()
-        return render(request, 'takenumbers/dashboard.html', {'nums':nums,'nums_count':nums_count, 'nums_working':nums_working})
+        nums_ttc = Bestellnummer.objects.annotate(time_elapsed=Sum(Cast(F('completed')-F('created'), DurationField()))).aggregate(Avg('time_elapsed'))
+        return render(request, 'takenumbers/dashboard.html', {'nums':nums,'nums_count':nums_count, 'nums_working':nums_working, 'nums_ttc':nums_ttc})
 
 
 def bnarchive(request):
